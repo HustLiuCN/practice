@@ -35,11 +35,28 @@ const insert = (arr) => {
 
 /** 快排 */
 const quick = (arr) => {
-  console.time('快排');
-
+  if (arr.length < 2) {
+    return arr;
+  }
+  const midIndex = Math.floor(arr.length / 2);
+  const midValue = arr.splice(midIndex, 1)[0];
+  const left = [];
+  const right = [];
+  for (let i = 0; i < arr.length; i ++) {
+    if (arr[i] < midValue) {
+      left.push(arr[i]);
+    } else {
+      right.push(arr[i]);
+    }
+  }
+  return quick(left).concat([midValue], quick(right));
 }
 
-const numbers = randomNumbers(100);
+const numbers = randomNumbers(1000);
 // const numbers = [1,2,3,4,5,6,7,8,9]
 bubble(numbers.slice());
 insert(numbers.slice());
+
+console.time('快排');
+quick(numbers.slice());
+console.timeEnd('快排');
